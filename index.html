@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Trading Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d0d0d; color: #e0e0e0; font-family: 'Courier New', monospace; font-size: 14px; }
+
+    header {
+      padding: 24px 32px 16px;
+      border-bottom: 1px solid #222;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    header h1 { font-size: 18px; color: #fff; letter-spacing: 1px; }
+    header .meta { font-size: 11px; color: #555; text-align: right; }
+    header .meta span { color: #888; }
+
+    .grid { display: grid; gap: 16px; padding: 24px 32px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+    .card {
+      background: #141414;
+      border: 1px solid #222;
+      border-radius: 6px;
+      padding: 20px;
+    }
+    .card h2 { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+
+    /* KPI chips */
+    .kpi { font-size: 28px; font-weight: bold; color: #fff; }
+    .kpi.green { color: #22c55e; }
+    .kpi.red { color: #ef4444; }
+    .kpi-label { font-size: 11px; color: #555; margin-top: 4px; }
+
+    /* Strategy table */
+    table { width: 100%; border-collapse: collapse; }
+    th { font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 8px; text-align: right; border-bottom: 1px solid #222; }
+    th:first-child { text-align: left; }
+    td { padding: 10px 8px; border-bottom: 1px solid #1a1a1a; text-align: right; font-size: 13px; }
+    td:first-child { text-align: left; color: #fff; }
+    tr:last-child td { border-bottom: none; }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: bold;
+    }
+    .badge-btc { background: #f7931a22; color: #f7931a; }
+    .badge-tao { background: #8b5cf622; color: #a78bfa; }
+
+    .pf-bar {
+      display: inline-block;
+      height: 4px;
+      background: #22c55e;
+      border-radius: 2px;
+      vertical-align: middle;
+      margin-left: 6px;
+    }
+
+    /* Trade log */
+    .trade-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #1a1a1a;
+      font-size: 12px;
+    }
+    .trade-row:last-child { border-bottom: none; }
+    .trade-dir { font-weight: bold; width: 50px; }
+    .trade-dir.long { color: #22c55e; }
+    .trade-dir.short { color: #ef4444; }
+    .trade-pnl.pos { color: #22c55e; }
+    .trade-pnl.neg { color: #ef4444; }
+    .trade-pnl.open { color: #f59e0b; }
+    .trade-meta { color: #555; font-size: 11px; }
+
+    .empty { color: #333; font-size: 12px; padding: 20px 0; text-align: center; }
+
+    canvas { max-height: 220px; }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
+    }
+
+    @media (max-width: 800px) {
+      .grid-2, .grid-4 { grid-template-columns: 1fr; }
+      header { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1><span class="status-dot"></span>Demo Trading Dashboard</h1>
+    <div style="font-size:11px; color:#444; margin-top:4px;">Portafolio 4 estrategias · BloFin Demo · 4H</div>
+  </div>
+  <div class="meta">
+    Última actualización: <span id="lastUpdate">—</span><br>
+    Equity demo: <span id="headerEquity" style="color:#fff;">—</span>
+  </div>
+</header>
+
+<!-- KPIs demo -->
+<div class="grid grid-4" style="padding-bottom:0">
+  <div class="card">
+    <h2>Equity Demo</h2>
+    <div class="kpi" id="kpiEquity">—</div>
+    <div class="kpi-label">USDT en cuenta BloFin</div>
+  </div>
+  <div class="card">
+    <h2>PnL Total Demo</h2>
+    <div class="kpi" id="kpiPnl">—</div>
+    <div class="kpi-label">desde inicio demo</div>
+  </div>
+  <div class="card">
+    <h2>Trades Cerrados</h2>
+    <div class="kpi" id="kpiTrades">—</div>
+    <div class="kpi-label" id="kpiWR">win rate —</div>
+  </div>
+  <div class="card">
+    <h2>Señales Totales</h2>
+    <div class="kpi" id="kpiSignals">—</div>
+    <div class="kpi-label">detectadas por el bot</div>
+  </div>
+</div>
+
+<!-- Backtester + equity curve -->
+<div class="grid grid-2">
+  <div class="card">
+    <h2>Portafolio Validado — Backtester (6 años)</h2>
+    <table id="backtestTable">
+      <thead>
+        <tr>
+          <th>Estrategia</th>
+          <th>Activo</th>
+          <th>PF</th>
+          <th>WR%</th>
+          <th>Max DD%</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <div style="font-size:10px; color:#333; margin-top:12px;">Capital: 10.000 USDT · Riesgo: 2%/op · Comisiones incluidas · 4H Binance</div>
+  </div>
+
+  <div class="card">
+    <h2>Equity Curve — Demo</h2>
+    <canvas id="equityChart"></canvas>
+    <div class="empty" id="equityEmpty">Sin trades aún — el bot acumula datos en cada señal</div>
+  </div>
+</div>
+
+<!-- Trade log + PnL por estrategia -->
+<div class="grid grid-2">
+  <div class="card">
+    <h2>Historial de Trades — Demo</h2>
+    <div id="tradeLog"><div class="empty">Sin trades registrados aún</div></div>
+  </div>
+
+  <div class="card">
+    <h2>PnL por Estrategia — Demo</h2>
+    <canvas id="pnlChart"></canvas>
+    <div class="empty" id="pnlEmpty">Sin datos aún</div>
+  </div>
+</div>
+
+<div style="padding: 0 32px 32px; font-size: 10px; color: #2a2a2a; text-align: center;">
+  Demo Trading Only · No representa resultados reales · Capital en riesgo
+</div>
+
+<script>
+const BACKTEST_URL   = 'data/backtest-results.json';
+const DEMO_TRADES_URL = 'data/demo-trades.json';
+
+let equityChart = null;
+let pnlChart    = null;
+
+// ── Utilidades ─────────────────────────────────────────────────────────────────
+
+function fmt(n, dec = 2) {
+  if (n == null) return '—';
+  return (n >= 0 ? '+' : '') + n.toFixed(dec);
+}
+
+function fmtUsdt(n) {
+  if (n == null) return '—';
+  return (n >= 0 ? '+' : '') + n.toFixed(2) + ' USDT';
+}
+
+function colorClass(n) {
+  if (n == null) return '';
+  return n >= 0 ? 'green' : 'red';
+}
+
+function relativeTime(iso) {
+  if (!iso) return '—';
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 60) return `hace ${mins}m`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `hace ${hrs}h`;
+  return `hace ${Math.floor(hrs/24)}d`;
+}
+
+// ── Backtester ──────────────────────────────────────────────────────────────────
+
+async function loadBacktest() {
+  const data = await fetch(BACKTEST_URL).then(r => r.json());
+  const tbody = document.querySelector('#backtestTable tbody');
+  tbody.innerHTML = '';
+  for (const s of data.strategies) {
+    const assetClass = s.asset === 'BTC' ? 'badge-btc' : 'badge-tao';
+    const pfBar      = Math.min((s.profitFactor - 1) * 200, 80);
+    tbody.innerHTML += `
+      <tr>
+        <td>${s.name}</td>
+        <td><span class="badge ${assetClass}">${s.asset}</span></td>
+        <td style="color:#22c55e">${s.profitFactor.toFixed(3)}<span class="pf-bar" style="width:${pfBar}px"></span></td>
+        <td>${s.winRate.toFixed(1)}%</td>
+        <td style="color:#ef4444">${s.maxDrawdown.toFixed(2)}%</td>
+      </tr>`;
+  }
+}
+
+// ── Demo Trades ─────────────────────────────────────────────────────────────────
+
+async function loadDemoTrades() {
+  const data = await fetch(DEMO_TRADES_URL + '?t=' + Date.now()).then(r => r.json());
+
+  // Header
+  document.getElementById('lastUpdate').textContent = relativeTime(data.updatedAt);
+  const eq = data.equity;
+  document.getElementById('headerEquity').textContent = eq != null ? eq.toFixed(2) + ' USDT' : '—';
+  document.getElementById('kpiEquity').textContent    = eq != null ? eq.toFixed(2) : '—';
+  document.getElementById('kpiEquity').className      = 'kpi ' + colorClass(eq != null ? eq - 1000 : null);
+
+  const trades  = data.trades || [];
+  const closed  = trades.filter(t => t.status === 'closed');
+  const signals = trades.length;
+  const wins    = closed.filter(t => (t.pnl || 0) > 0).length;
+  const totalPnl = closed.reduce((a, t) => a + (t.pnl || 0), 0);
+  const wr       = closed.length > 0 ? (wins / closed.length * 100).toFixed(1) : null;
+
+  document.getElementById('kpiPnl').textContent    = fmtUsdt(closed.length ? totalPnl : null);
+  document.getElementById('kpiPnl').className      = 'kpi ' + colorClass(totalPnl);
+  document.getElementById('kpiTrades').textContent = closed.length || '—';
+  document.getElementById('kpiWR').textContent     = wr ? `win rate ${wr}%` : 'win rate —';
+  document.getElementById('kpiSignals').textContent = signals || '—';
+
+  // Trade log
+  const logEl = document.getElementById('tradeLog');
+  if (trades.length === 0) {
+    logEl.innerHTML = '<div class="empty">Sin trades registrados aún</div>';
+  } else {
+    logEl.innerHTML = [...trades].reverse().slice(0, 20).map(t => {
+      const pnlClass = t.status === 'open' ? 'open' : (t.pnl >= 0 ? 'pos' : 'neg');
+      const pnlText  = t.status === 'open' ? 'ABIERTO' : fmtUsdt(t.pnl);
+      return `
+        <div class="trade-row">
+          <div>
+            <span class="trade-dir ${t.direction}">${t.direction.toUpperCase()}</span>
+            <span style="color:#888">${t.symbol}</span>
+            <span class="trade-meta" style="margin-left:8px">${t.strategy}</span>
+          </div>
+          <div style="text-align:right">
+            <div class="trade-pnl ${pnlClass}">${pnlText}</div>
+            <div class="trade-meta">${relativeTime(t.openedAt)}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // Equity curve
+  const equityPoints = trades
+    .filter(t => t.status === 'closed' && t.equityAfter != null)
+    .map(t => ({ x: t.closedAt, y: t.equityAfter }));
+
+  const equityEmpty = document.getElementById('equityEmpty');
+  if (equityPoints.length > 0) {
+    equityEmpty.style.display = 'none';
+    if (equityChart) equityChart.destroy();
+    const ctx = document.getElementById('equityChart').getContext('2d');
+    equityChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: equityPoints.map(p => new Date(p.x).toLocaleDateString('es-ES')),
+        datasets: [{
+          data: equityPoints.map(p => p.y),
+          borderColor: '#22c55e',
+          backgroundColor: '#22c55e15',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 3,
+        }],
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: '#555', font: { size: 10 } }, grid: { color: '#1a1a1a' } },
+          y: { ticks: { color: '#555', font: { size: 10 } }, grid: { color: '#1a1a1a' } },
+        },
+      },
+    });
+  } else {
+    equityEmpty.style.display = 'block';
+  }
+
+  // PnL por estrategia
+  const pnlEmpty = document.getElementById('pnlEmpty');
+  const byStrategy = {};
+  for (const t of closed) {
+    if (!byStrategy[t.strategy]) byStrategy[t.strategy] = 0;
+    byStrategy[t.strategy] += t.pnl || 0;
+  }
+  const stratNames = Object.keys(byStrategy);
+  if (stratNames.length > 0) {
+    pnlEmpty.style.display = 'none';
+    if (pnlChart) pnlChart.destroy();
+    const ctx = document.getElementById('pnlChart').getContext('2d');
+    pnlChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: stratNames,
+        datasets: [{
+          data: stratNames.map(k => byStrategy[k]),
+          backgroundColor: stratNames.map(k => byStrategy[k] >= 0 ? '#22c55e66' : '#ef444466'),
+          borderColor:     stratNames.map(k => byStrategy[k] >= 0 ? '#22c55e' : '#ef4444'),
+          borderWidth: 1,
+        }],
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { ticks: { color: '#555', font: { size: 10 } }, grid: { color: '#1a1a1a' } },
+          y: { ticks: { color: '#555', font: { size: 10 } }, grid: { color: '#1a1a1a' } },
+        },
+      },
+    });
+  } else {
+    pnlEmpty.style.display = 'block';
+  }
+}
+
+// ── Init ────────────────────────────────────────────────────────────────────────
+
+async function init() {
+  await Promise.all([loadBacktest(), loadDemoTrades()]);
+  // Refresca cada 5 minutos
+  setInterval(loadDemoTrades, 5 * 60 * 1000);
+}
+
+init();
+</script>
+</body>
+</html>
