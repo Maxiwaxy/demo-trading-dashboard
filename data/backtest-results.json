@@ -1,0 +1,51 @@
+{
+  "updatedAt": "2026-05-16",
+  "config": {
+    "capital": 10000,
+    "riskPerTrade": 0.02,
+    "timeframe": "4H",
+    "period": "May 2020 – May 2026"
+  },
+  "strategies": [
+    {
+      "id": "S1",
+      "name": "S1-Donchian",
+      "asset": "BTC",
+      "profitFactor": 1.555,
+      "winRate": 22.0,
+      "maxDrawdown": 24.85,
+      "totalTrades": 0,
+      "config": "SL 1×ATR | TP 7×ATR | Vol 2× | EMA200 ON"
+    },
+    {
+      "id": "S9",
+      "name": "S9-MeanRev",
+      "asset": "BTC",
+      "profitFactor": 1.61,
+      "winRate": 63.4,
+      "maxDrawdown": 6.58,
+      "totalTrades": 0,
+      "config": "RSI<35 long / >65 short | SL 2.5×ATR | TP BB mid | EMA200 ON"
+    },
+    {
+      "id": "S6",
+      "name": "S6-DonchTAO",
+      "asset": "TAO",
+      "profitFactor": 1.598,
+      "winRate": 37.8,
+      "maxDrawdown": 10.54,
+      "totalTrades": 0,
+      "config": "Donchian breakout en TAO"
+    },
+    {
+      "id": "S4",
+      "name": "S4-BBSqueeze",
+      "asset": "TAO",
+      "profitFactor": 1.631,
+      "winRate": 40.7,
+      "maxDrawdown": 18.28,
+      "totalTrades": 0,
+      "config": "BB Squeeze + OBV en TAO"
+    }
+  ]
+}
