@@ -1,5 +1,20 @@
 {
-  "updatedAt": "2026-05-18T12:02:00.917Z",
+  "updatedAt": "2026-05-18T16:02:01.742Z",
   "equity": 10000,
-  "trades": []
+  "trades": [
+    {
+      "id": "S1-1779120120928",
+      "strategy": "S1-Donchian",
+      "symbol": "BTC-USDT",
+      "direction": "short",
+      "entry": 76409.46,
+      "sl": 77215.42834932242,
+      "tp": 70767.68155474307,
+      "status": "open",
+      "openedAt": "2026-05-18T16:02:00.928Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
+    }
+  ]
 }
