@@ -8,21 +8,11 @@
   },
   "strategies": [
     {
-      "id": "S1",
-      "name": "S1-Donchian",
-      "asset": "BTC",
-      "timeframe": "4H",
-      "profitFactor": 1.555,
-      "winRate": 22.0,
-      "maxDrawdown": 24.85,
-      "trades": 0,
-      "config": "SL 1×ATR | TP 7×ATR | Vol 2× | EMA200"
-    },
-    {
       "id": "S9",
       "name": "S9-MeanRev",
       "asset": "BTC",
       "timeframe": "4H",
+      "symbol": "BTC-USDT",
       "profitFactor": 1.61,
       "winRate": 63.4,
       "maxDrawdown": 6.58,
@@ -30,32 +20,11 @@
       "config": "RSI<35/65 | SL 2.5×ATR | TP BB mid | EMA200"
     },
     {
-      "id": "S6",
-      "name": "S6-DonchTAO",
-      "asset": "TAO",
-      "timeframe": "4H",
-      "profitFactor": 1.598,
-      "winRate": 37.8,
-      "maxDrawdown": 10.54,
-      "trades": 0,
-      "config": "Donchian breakout | Vol 2×"
-    },
-    {
-      "id": "S4",
-      "name": "S4-BBSqueeze",
-      "asset": "TAO",
-      "timeframe": "4H",
-      "profitFactor": 1.631,
-      "winRate": 40.7,
-      "maxDrawdown": 18.28,
-      "trades": 0,
-      "config": "BB Squeeze + OBV"
-    },
-    {
       "id": "SC1",
       "name": "SC1-DonchETH",
       "asset": "ETH",
       "timeframe": "4H",
+      "symbol": "ETH-USDT",
       "profitFactor": 1.516,
       "winRate": 20.5,
       "maxDrawdown": 44.93,
@@ -63,54 +32,35 @@
       "config": "Donchian | Vol 2× | EMA200"
     },
     {
-      "id": "SC2",
-      "name": "SC2-AdaptDonchETH",
-      "asset": "ETH",
+      "id": "S4",
+      "name": "S4-BBSqueeze",
+      "asset": "TAO",
       "timeframe": "4H",
-      "profitFactor": 1.435,
-      "winRate": 18.6,
-      "maxDrawdown": 26.25,
-      "trades": 183,
-      "config": "Adaptive Donchian | ADX regime"
+      "symbol": "TAO-USDT",
+      "profitFactor": 1.631,
+      "winRate": 40.7,
+      "maxDrawdown": 18.28,
+      "trades": 0,
+      "config": "BB Squeeze + OBV"
     },
     {
-      "id": "SC3",
-      "name": "SC3-AdaptDonchBTC",
-      "asset": "BTC",
-      "timeframe": "4H",
-      "profitFactor": 1.392,
-      "winRate": 19.0,
-      "maxDrawdown": 21.76,
-      "trades": 189,
-      "config": "Adaptive Donchian | ADX regime"
-    },
-    {
-      "id": "SC4",
-      "name": "SC4-DonchETH2",
-      "asset": "ETH",
-      "timeframe": "4H",
-      "profitFactor": 1.255,
-      "winRate": 33.9,
-      "maxDrawdown": 30.42,
-      "trades": 333,
-      "config": "Donchian | SL 1.5×ATR | TP 4×ATR"
-    },
-    {
-      "id": "M1",
-      "name": "M1-STFlip",
+      "id": "M4",
+      "name": "M4-STFlipPremium",
       "asset": "BTC",
       "timeframe": "15m",
-      "profitFactor": 1.621,
-      "winRate": 31.6,
-      "maxDrawdown": 19.96,
-      "trades": 79,
-      "config": "ST flip | ADX≥25 | Vol 2× | 4H filter"
+      "symbol": "BTC-USDC",
+      "profitFactor": 1.831,
+      "winRate": 35.1,
+      "maxDrawdown": 13.88,
+      "trades": 37,
+      "config": "ST flip | ADX≥30 | Vol 2× | 4H filter"
     },
     {
       "id": "M2",
       "name": "M2-MeanRevETH",
       "asset": "ETH",
       "timeframe": "15m",
+      "symbol": "ETH-USDC",
       "profitFactor": 1.568,
       "winRate": 40.7,
       "maxDrawdown": 18.20,
@@ -122,22 +72,12 @@
       "name": "M3-MeanRevTAO",
       "asset": "TAO",
       "timeframe": "15m",
+      "symbol": "TAO-USDC",
       "profitFactor": 1.335,
       "winRate": 28.3,
       "maxDrawdown": 13.63,
       "trades": 53,
       "config": "BB+RSI | EMA200 | 4H filter"
-    },
-    {
-      "id": "M4",
-      "name": "M4-STFlipPremium",
-      "asset": "BTC",
-      "timeframe": "15m",
-      "profitFactor": 1.831,
-      "winRate": 35.1,
-      "maxDrawdown": 13.88,
-      "trades": 37,
-      "config": "ST flip | ADX≥30 | Vol 2× | 4H filter"
     }
   ]
 }
