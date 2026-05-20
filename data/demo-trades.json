@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-20T20:04:15.153Z",
+  "updatedAt": "2026-05-20T20:04:17.596Z",
   "equity": 10000,
   "trades": [
     {
@@ -26,6 +26,20 @@
       "tp": 305.7611159875101,
       "status": "open",
       "openedAt": "2026-05-20T20:00:30.983Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
+    },
+    {
+      "id": "S4-1779307457305",
+      "strategy": "S4-BBSqueeze",
+      "symbol": "TAO-USDT",
+      "direction": "long",
+      "entry": 274.9,
+      "sl": 262.5555536049959,
+      "tp": 305.7611159875101,
+      "status": "open",
+      "openedAt": "2026-05-20T20:04:17.305Z",
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
