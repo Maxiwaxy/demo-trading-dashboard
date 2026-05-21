@@ -334,10 +334,7 @@ async function loadDemoTrades() {
   const closed  = trades.filter(t => t.status === 'closed');
   const signals = trades.length;
 
-  // Fetch precios actuales para posiciones abiertas
-  const symbols = [...new Set(open.map(t => t.symbol))];
-  const prices  = symbols.length > 0 ? await fetchPrices(symbols) : {};
-  renderOpenPositions(open, prices);
+  renderOpenPositions(data.blofinPositions);
   const wins    = closed.filter(t => (t.pnl || 0) > 0).length;
   const totalPnl = closed.reduce((a, t) => a + (t.pnl || 0), 0);
   const wr       = closed.length > 0 ? (wins / closed.length * 100).toFixed(1) : null;
@@ -444,88 +441,66 @@ async function loadDemoTrades() {
   }
 }
 
-// ── Precios de mercado (BloFin public API) ──────────────────────────────────────
+// ── Posiciones abiertas (datos reales de BloFin) ──────────────────────────────
 
-async function fetchPrices(symbols) {
-  const prices = {};
-  for (const sym of symbols) {
-    try {
-      const res = await fetch(`https://openapi.blofin.com/api/v1/market/tickers?instType=swap&instId=${sym}`);
-      const data = await res.json();
-      const tickers = Array.isArray(data.data) ? data.data : [];
-      const t = tickers.find(x => x.instId === sym);
-      if (t) prices[sym] = parseFloat(t.last);
-    } catch (_) {}
-  }
-  return prices;
-}
-
-// ── Posiciones abiertas ─────────────────────────────────────────────────────────
-
-function renderOpenPositions(openTrades, prices) {
+function renderOpenPositions(blofinPositions) {
   const section = document.getElementById('openPosSection');
   const grid    = document.getElementById('openPosGrid');
   const count   = document.getElementById('openPosCount');
 
-  if (openTrades.length === 0) {
+  if (!blofinPositions || blofinPositions.length === 0) {
     section.style.display = 'none';
     return;
   }
 
   section.style.display = 'block';
-  count.textContent = `(${openTrades.length})`;
+  count.textContent = `(${blofinPositions.length})`;
 
-  grid.innerHTML = openTrades.map(t => {
-    const isLong    = t.direction === 'long';
+  grid.innerHTML = blofinPositions.map(p => {
+    const isLong    = p.direction === 'long';
     const dir       = isLong ? 'LONG' : 'SHORT';
     const dirClass  = isLong ? 'long' : 'short';
     const cardClass = isLong ? 'long-card' : 'short-card';
 
-    const mark = prices[t.symbol] ?? null;
     const fmtP = n => n != null ? Number(n).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
+    const fmtPnl = n => n != null ? `${n >= 0 ? '+' : ''}${n.toFixed(2)} USDT` : '—';
 
-    // Price change from entry
-    const pctEntry = mark != null
-      ? ((mark - t.entry) / t.entry * 100 * (isLong ? 1 : -1)).toFixed(2)
+    const upl       = p.upl ?? 0;
+    const uplPct    = ((p.uplRatio ?? 0) * 100).toFixed(2);
+    const pnlColor  = upl > 0 ? 'green' : upl < 0 ? 'red' : 'muted';
+
+    const pctFromEntry = p.avgPx > 0
+      ? ((p.markPx - p.avgPx) / p.avgPx * 100 * (isLong ? 1 : -1)).toFixed(2)
       : null;
+    const pctColor = pctFromEntry == null ? 'muted' : pctFromEntry > 0 ? 'green' : pctFromEntry < 0 ? 'red' : 'muted';
 
-    // Estimated PnL: (currentPrice - entry) * direction * size
-    let pnlEst = null;
-    if (mark != null && t.size != null) {
-      pnlEst = (mark - t.entry) * (isLong ? 1 : -1) * t.size;
-    }
-
-    // % distances
-    const distSL = t.sl != null ? Math.abs((t.sl - t.entry) / t.entry * 100).toFixed(2) : null;
-    const distTP = t.tp != null ? Math.abs((t.tp - t.entry) / t.entry * 100).toFixed(2) : null;
-
-    // Price bar: range from sl to tp
-    const lo = isLong ? (t.sl ?? t.entry * 0.97) : (t.tp ?? t.entry * 0.97);
-    const hi = isLong ? (t.tp ?? t.entry * 1.03) : (t.sl ?? t.entry * 1.03);
+    // Price bar anchored on entry ± 5% if no SL/TP
+    const sl = p.slTriggerPx;
+    const tp = p.tpTriggerPx;
+    const lo = isLong ? (sl ?? p.avgPx * 0.95) : (tp ?? p.avgPx * 0.95);
+    const hi = isLong ? (tp ?? p.avgPx * 1.05) : (sl ?? p.avgPx * 1.05);
     const range = Math.abs(hi - lo) || 1;
     const pct = n => Math.max(0, Math.min(100, ((n - lo) / range) * 100));
 
     const pins = [
-      { p: pct(t.entry), color: '#60a5fa', title: `Entrada ${fmtP(t.entry)}` },
-      t.sl != null ? { p: pct(t.sl), color: '#ef4444', title: `SL ${fmtP(t.sl)}` } : null,
-      t.tp != null ? { p: pct(t.tp), color: '#22c55e', title: `TP ${fmtP(t.tp)}` } : null,
-      mark != null ? { p: pct(mark), color: pctEntry >= 0 ? '#22c55e' : '#ef4444', title: `Actual ${fmtP(mark)}` } : null,
+      sl != null ? { p: pct(sl), color: '#ef4444', title: `SL ${fmtP(sl)}` } : null,
+      { p: pct(p.avgPx),  color: '#60a5fa', title: `Entrada ${fmtP(p.avgPx)}` },
+      { p: pct(p.markPx), color: upl >= 0 ? '#22c55e' : '#ef4444', title: `Actual ${fmtP(p.markPx)}` },
+      tp != null ? { p: pct(tp), color: '#22c55e', title: `TP ${fmtP(tp)}` } : null,
     ].filter(Boolean).map(pin =>
       `<div class="op-bar-pin" style="left:${pin.p}%;background:${pin.color}" title="${pin.title}"></div>`
     ).join('');
 
-    const pnlColor  = pnlEst == null ? 'muted' : pnlEst > 0 ? 'green' : pnlEst < 0 ? 'red' : 'muted';
-    const pctColor  = pctEntry == null ? 'muted' : pctEntry > 0 ? 'green' : pctEntry < 0 ? 'red' : 'muted';
-    const pnlText   = pnlEst != null ? `${pnlEst >= 0 ? '+' : ''}${pnlEst.toFixed(2)} USDT` : '—';
-    const pctText   = pctEntry != null ? `${pctEntry >= 0 ? '+' : ''}${pctEntry}%` : '—';
-    const sizeText  = t.size != null ? `${t.size} cont.` : '—';
-    const openedAgo = relativeTime(t.openedAt);
+    const distSL = sl != null ? Math.abs((sl - p.avgPx) / p.avgPx * 100).toFixed(2) : null;
+    const distTP = tp != null ? Math.abs((tp - p.avgPx) / p.avgPx * 100).toFixed(2) : null;
+
+    const updatedAgo = relativeTime(p.updatedAt);
 
     return `<div class="op-card ${cardClass}">
       <div class="op-header">
         <div>
-          <div class="op-title">${t.symbol}</div>
-          <div class="op-strategy">${t.strategy} · ${openedAgo}</div>
+          <div class="op-title">${p.instId}</div>
+          <div class="op-strategy">${p.leverage}x · actualizado ${updatedAgo}</div>
         </div>
         <span class="op-dir ${dirClass}">${dir}</span>
       </div>
@@ -533,26 +508,30 @@ function renderOpenPositions(openTrades, prices) {
       <div class="op-stats">
         <div class="op-stat">
           <div class="lbl">Posicion</div>
-          <div class="val">${sizeText}</div>
+          <div class="val">${p.contracts} cont.</div>
+          <div style="font-size:10px;color:#555;margin-top:2px">Margen ${fmtP(p.margin)} USDT</div>
         </div>
         <div class="op-stat">
           <div class="lbl">Entrada</div>
-          <div class="val" style="color:#60a5fa">${fmtP(t.entry)}</div>
+          <div class="val" style="color:#60a5fa">${fmtP(p.avgPx)}</div>
         </div>
         <div class="op-stat">
           <div class="lbl">Precio actual</div>
-          <div class="val ${pctColor}">${fmtP(mark)}</div>
+          <div class="val ${pctColor}">${fmtP(p.markPx)}</div>
+          <div style="font-size:10px;color:#555;margin-top:2px">${pctFromEntry != null ? (pctFromEntry >= 0 ? '+' : '') + pctFromEntry + '%' : ''}</div>
         </div>
         <div class="op-stat">
-          <div class="lbl">~PnL</div>
-          <div class="val ${pnlColor}">${pnlText}</div>
+          <div class="lbl">PnL</div>
+          <div class="val ${pnlColor}">${fmtPnl(upl)}</div>
+          <div style="font-size:10px;color:#555;margin-top:2px">${upl >= 0 ? '+' : ''}${uplPct}% · real ${fmtPnl(p.realizedPnl)}</div>
         </div>
       </div>
 
       <div class="op-levels">
-        ${t.sl != null ? `<span class="op-chip sl">SL ${fmtP(t.sl)} <span style="color:#666">(${distSL}%)</span></span>` : '<span class="op-chip sl" style="opacity:0.4">SL —</span>'}
-        <span class="op-chip en">Entrada ${fmtP(t.entry)}</span>
-        ${t.tp != null ? `<span class="op-chip tp">TP ${fmtP(t.tp)} <span style="color:#666">(${distTP}%)</span></span>` : '<span class="op-chip tp" style="opacity:0.4">TP —</span>'}
+        ${sl != null ? `<span class="op-chip sl">SL ${fmtP(sl)} <span style="color:#666">(${distSL}%)</span></span>` : '<span class="op-chip sl" style="opacity:0.4">SL —</span>'}
+        <span class="op-chip en">Entrada ${fmtP(p.avgPx)}</span>
+        ${tp != null ? `<span class="op-chip tp">TP ${fmtP(tp)} <span style="color:#666">(${distTP}%)</span></span>` : '<span class="op-chip tp" style="opacity:0.4">TP —</span>'}
+        ${p.liqPx != null ? `<span class="op-chip liq">Liq ${fmtP(p.liqPx)}</span>` : ''}
       </div>
 
       <div class="op-bar-track">
@@ -560,9 +539,9 @@ function renderOpenPositions(openTrades, prices) {
         ${pins}
       </div>
       <div class="op-bar-labels">
-        <span>${fmtP(isLong ? t.sl : t.tp)}</span>
-        <span style="color:${pctColor}">${pctText} desde entrada</span>
-        <span>${fmtP(isLong ? t.tp : t.sl)}</span>
+        <span>${fmtP(isLong ? sl : tp) !== '—' ? fmtP(isLong ? sl : tp) : ''}</span>
+        <span style="color:${pctColor}">${pctFromEntry != null ? (pctFromEntry >= 0 ? '+' : '') + pctFromEntry + '% desde entrada' : ''}</span>
+        <span>${fmtP(isLong ? tp : sl) !== '—' ? fmtP(isLong ? tp : sl) : ''}</span>
       </div>
     </div>`;
   }).join('');
