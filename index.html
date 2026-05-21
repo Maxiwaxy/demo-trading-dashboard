@@ -101,6 +101,65 @@
       0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
     }
 
+    /* ── Posiciones abiertas ── */
+    .open-positions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 12px;
+    }
+    .op-card {
+      background: #141414;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 14px 16px;
+    }
+    .op-card.long-card  { border-left: 3px solid #22c55e; }
+    .op-card.short-card { border-left: 3px solid #ef4444; }
+    .op-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px;
+    }
+    .op-title { font-size: 13px; font-weight: bold; color: #fff; }
+    .op-strategy { font-size: 10px; color: #555; }
+    .op-dir { font-size: 11px; font-weight: bold; padding: 2px 7px; border-radius: 3px; }
+    .op-dir.long  { background: #22c55e22; color: #22c55e; }
+    .op-dir.short { background: #ef444422; color: #ef4444; }
+    .op-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 8px; margin-bottom: 12px;
+    }
+    .op-stat .lbl { font-size: 9px; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+    .op-stat .val { font-size: 13px; font-weight: bold; }
+    .op-stat .val.green  { color: #22c55e; }
+    .op-stat .val.red    { color: #ef4444; }
+    .op-stat .val.yellow { color: #f59e0b; }
+    .op-stat .val.muted  { color: #555; }
+    /* Levels chips */
+    .op-levels { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .op-chip {
+      font-size: 10px; padding: 3px 8px; border-radius: 3px; border: 1px solid;
+    }
+    .op-chip.sl { border-color: #ef444466; color: #ef4444; background: #ef444410; }
+    .op-chip.en { border-color: #3b82f666; color: #60a5fa; background: #3b82f610; }
+    .op-chip.tp { border-color: #22c55e66; color: #22c55e; background: #22c55e10; }
+    .op-chip.liq { border-color: #f59e0b44; color: #f59e0b; background: #f59e0b08; }
+    /* Price bar */
+    .op-bar-track {
+      position: relative; height: 5px; background: #222; border-radius: 3px; margin-bottom: 4px;
+    }
+    .op-bar-fill {
+      position: absolute; top: 0; height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, #ef444440, #22c55e40);
+    }
+    .op-bar-pin {
+      position: absolute; top: 50%; transform: translate(-50%, -50%);
+      width: 3px; height: 12px; border-radius: 2px;
+    }
+    .op-bar-labels {
+      display: flex; justify-content: space-between;
+      font-size: 9px; color: #444;
+    }
+
     @media (max-width: 800px) {
       .grid-2, .grid-4 { grid-template-columns: 1fr; }
       header { flex-direction: column; gap: 8px; }
@@ -168,6 +227,14 @@
     <h2>Equity Curve — Demo</h2>
     <canvas id="equityChart"></canvas>
     <div class="empty" id="equityEmpty">Sin trades aún — el bot acumula datos en cada señal</div>
+  </div>
+</div>
+
+<!-- Posiciones abiertas -->
+<div class="grid" style="padding-bottom:0;display:none" id="openPosSection">
+  <div class="card">
+    <h2 style="margin-bottom:14px">Posiciones Abiertas <span id="openPosCount" style="color:#555;font-weight:normal"></span></h2>
+    <div class="open-positions-grid" id="openPosGrid"></div>
   </div>
 </div>
 
@@ -263,8 +330,14 @@ async function loadDemoTrades() {
   document.getElementById('kpiEquity').className      = 'kpi ' + colorClass(eq != null ? eq - 1000 : null);
 
   const trades  = data.trades || [];
+  const open    = trades.filter(t => t.status === 'open');
   const closed  = trades.filter(t => t.status === 'closed');
   const signals = trades.length;
+
+  // Fetch precios actuales para posiciones abiertas
+  const symbols = [...new Set(open.map(t => t.symbol))];
+  const prices  = symbols.length > 0 ? await fetchPrices(symbols) : {};
+  renderOpenPositions(open, prices);
   const wins    = closed.filter(t => (t.pnl || 0) > 0).length;
   const totalPnl = closed.reduce((a, t) => a + (t.pnl || 0), 0);
   const wr       = closed.length > 0 ? (wins / closed.length * 100).toFixed(1) : null;
@@ -282,7 +355,9 @@ async function loadDemoTrades() {
   } else {
     logEl.innerHTML = [...trades].reverse().slice(0, 20).map(t => {
       const pnlClass = t.status === 'open' ? 'open' : (t.pnl >= 0 ? 'pos' : 'neg');
-      const pnlText  = t.status === 'open' ? 'ABIERTO' : fmtUsdt(t.pnl);
+      const pnlText  = t.status === 'open'
+        ? `@ ${t.entry != null ? t.entry.toFixed(2) : '—'}`
+        : fmtUsdt(t.pnl);
       return `
         <div class="trade-row">
           <div>
@@ -367,6 +442,130 @@ async function loadDemoTrades() {
   } else {
     pnlEmpty.style.display = 'block';
   }
+}
+
+// ── Precios de mercado (BloFin public API) ──────────────────────────────────────
+
+async function fetchPrices(symbols) {
+  const prices = {};
+  for (const sym of symbols) {
+    try {
+      const res = await fetch(`https://openapi.blofin.com/api/v1/market/tickers?instType=swap&instId=${sym}`);
+      const data = await res.json();
+      const tickers = Array.isArray(data.data) ? data.data : [];
+      const t = tickers.find(x => x.instId === sym);
+      if (t) prices[sym] = parseFloat(t.last);
+    } catch (_) {}
+  }
+  return prices;
+}
+
+// ── Posiciones abiertas ─────────────────────────────────────────────────────────
+
+function renderOpenPositions(openTrades, prices) {
+  const section = document.getElementById('openPosSection');
+  const grid    = document.getElementById('openPosGrid');
+  const count   = document.getElementById('openPosCount');
+
+  if (openTrades.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  count.textContent = `(${openTrades.length})`;
+
+  grid.innerHTML = openTrades.map(t => {
+    const isLong    = t.direction === 'long';
+    const dir       = isLong ? 'LONG' : 'SHORT';
+    const dirClass  = isLong ? 'long' : 'short';
+    const cardClass = isLong ? 'long-card' : 'short-card';
+
+    const mark = prices[t.symbol] ?? null;
+    const fmtP = n => n != null ? Number(n).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '—';
+
+    // Price change from entry
+    const pctEntry = mark != null
+      ? ((mark - t.entry) / t.entry * 100 * (isLong ? 1 : -1)).toFixed(2)
+      : null;
+
+    // Estimated PnL: (currentPrice - entry) * direction * size
+    let pnlEst = null;
+    if (mark != null && t.size != null) {
+      pnlEst = (mark - t.entry) * (isLong ? 1 : -1) * t.size;
+    }
+
+    // % distances
+    const distSL = t.sl != null ? Math.abs((t.sl - t.entry) / t.entry * 100).toFixed(2) : null;
+    const distTP = t.tp != null ? Math.abs((t.tp - t.entry) / t.entry * 100).toFixed(2) : null;
+
+    // Price bar: range from sl to tp
+    const lo = isLong ? (t.sl ?? t.entry * 0.97) : (t.tp ?? t.entry * 0.97);
+    const hi = isLong ? (t.tp ?? t.entry * 1.03) : (t.sl ?? t.entry * 1.03);
+    const range = Math.abs(hi - lo) || 1;
+    const pct = n => Math.max(0, Math.min(100, ((n - lo) / range) * 100));
+
+    const pins = [
+      { p: pct(t.entry), color: '#60a5fa', title: `Entrada ${fmtP(t.entry)}` },
+      t.sl != null ? { p: pct(t.sl), color: '#ef4444', title: `SL ${fmtP(t.sl)}` } : null,
+      t.tp != null ? { p: pct(t.tp), color: '#22c55e', title: `TP ${fmtP(t.tp)}` } : null,
+      mark != null ? { p: pct(mark), color: pctEntry >= 0 ? '#22c55e' : '#ef4444', title: `Actual ${fmtP(mark)}` } : null,
+    ].filter(Boolean).map(pin =>
+      `<div class="op-bar-pin" style="left:${pin.p}%;background:${pin.color}" title="${pin.title}"></div>`
+    ).join('');
+
+    const pnlColor  = pnlEst == null ? 'muted' : pnlEst > 0 ? 'green' : pnlEst < 0 ? 'red' : 'muted';
+    const pctColor  = pctEntry == null ? 'muted' : pctEntry > 0 ? 'green' : pctEntry < 0 ? 'red' : 'muted';
+    const pnlText   = pnlEst != null ? `${pnlEst >= 0 ? '+' : ''}${pnlEst.toFixed(2)} USDT` : '—';
+    const pctText   = pctEntry != null ? `${pctEntry >= 0 ? '+' : ''}${pctEntry}%` : '—';
+    const sizeText  = t.size != null ? `${t.size} cont.` : '—';
+    const openedAgo = relativeTime(t.openedAt);
+
+    return `<div class="op-card ${cardClass}">
+      <div class="op-header">
+        <div>
+          <div class="op-title">${t.symbol}</div>
+          <div class="op-strategy">${t.strategy} · ${openedAgo}</div>
+        </div>
+        <span class="op-dir ${dirClass}">${dir}</span>
+      </div>
+
+      <div class="op-stats">
+        <div class="op-stat">
+          <div class="lbl">Posicion</div>
+          <div class="val">${sizeText}</div>
+        </div>
+        <div class="op-stat">
+          <div class="lbl">Entrada</div>
+          <div class="val" style="color:#60a5fa">${fmtP(t.entry)}</div>
+        </div>
+        <div class="op-stat">
+          <div class="lbl">Precio actual</div>
+          <div class="val ${pctColor}">${fmtP(mark)}</div>
+        </div>
+        <div class="op-stat">
+          <div class="lbl">~PnL</div>
+          <div class="val ${pnlColor}">${pnlText}</div>
+        </div>
+      </div>
+
+      <div class="op-levels">
+        ${t.sl != null ? `<span class="op-chip sl">SL ${fmtP(t.sl)} <span style="color:#666">(${distSL}%)</span></span>` : '<span class="op-chip sl" style="opacity:0.4">SL —</span>'}
+        <span class="op-chip en">Entrada ${fmtP(t.entry)}</span>
+        ${t.tp != null ? `<span class="op-chip tp">TP ${fmtP(t.tp)} <span style="color:#666">(${distTP}%)</span></span>` : '<span class="op-chip tp" style="opacity:0.4">TP —</span>'}
+      </div>
+
+      <div class="op-bar-track">
+        <div class="op-bar-fill" style="left:0;width:100%"></div>
+        ${pins}
+      </div>
+      <div class="op-bar-labels">
+        <span>${fmtP(isLong ? t.sl : t.tp)}</span>
+        <span style="color:${pctColor}">${pctText} desde entrada</span>
+        <span>${fmtP(isLong ? t.tp : t.sl)}</span>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 // ── Init ────────────────────────────────────────────────────────────────────────
