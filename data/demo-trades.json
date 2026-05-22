@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-22T19:45:31.139Z",
+  "updatedAt": "2026-05-22T20:00:31.357Z",
   "equity": 9996.34527500143,
   "trades": [
     {
@@ -15,6 +15,20 @@
       "closedAt": "2026-05-22T00:00:00.000Z",
       "pnl": -7,
       "pnlNote": "Cierre manual forzado. -7% sobre margen. Sin SL configurado por bug en blofin.js (orderType/size). Bug corregido 2026-05-22.",
+      "equityAfter": null
+    },
+    {
+      "id": "SC1-1779480031048",
+      "strategy": "SC1-DonchETH",
+      "symbol": "ETH-USDT",
+      "direction": "short",
+      "entry": 2065.54,
+      "sl": 2094.2843070867325,
+      "tp": 1864.3298503928736,
+      "status": "open",
+      "openedAt": "2026-05-22T20:00:31.049Z",
+      "closedAt": null,
+      "pnl": null,
       "equityAfter": null
     }
   ],
