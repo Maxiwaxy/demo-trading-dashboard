@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-05-22T19:30:31.177Z",
-  "equity": 9997.579527485948,
+  "updatedAt": "2026-05-22T19:45:31.139Z",
+  "equity": 9996.34527500143,
   "trades": [
     {
       "id": "S4-1779350431075",
@@ -10,29 +10,13 @@
       "entry": 282.9,
       "sl": 270.3691878655376,
       "tp": 314.227030336156,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-05-21T08:00:31.075Z",
-      "closedAt": null,
-      "pnl": null,
+      "closedAt": "2026-05-22T00:00:00.000Z",
+      "pnl": -7,
+      "pnlNote": "Cierre manual forzado. -7% sobre margen. Sin SL configurado por bug en blofin.js (orderType/size). Bug corregido 2026-05-22.",
       "equityAfter": null
     }
   ],
-  "blofinPositions": [
-    {
-      "instId": "TAO-USDT",
-      "direction": "long",
-      "contracts": 32,
-      "avgPx": 275.775,
-      "markPx": 282.197871842,
-      "upl": 2.05531898944,
-      "uplRatio": 0.06987078424802828,
-      "leverage": "3",
-      "margin": 30.101106329813334,
-      "liqPx": null,
-      "tpTriggerPx": null,
-      "slTriggerPx": null,
-      "realizedPnl": 0.0529488,
-      "updatedAt": "2026-05-21T07:16:16.606Z"
-    }
-  ]
+  "blofinPositions": []
 }
