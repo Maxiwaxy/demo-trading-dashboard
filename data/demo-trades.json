@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-23T13:45:31.661Z",
+  "updatedAt": "2026-05-23T14:00:31.983Z",
   "equity": 9998.85946515084,
   "trades": [
     {
@@ -41,6 +41,20 @@
       "tp": 1818.3249934268888,
       "status": "open",
       "openedAt": "2026-05-23T08:00:31.037Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
+    },
+    {
+      "id": "M4-1779544831220",
+      "strategy": "M4-STFlipPremium",
+      "symbol": "BTC-USDC",
+      "direction": "long",
+      "entry": 75213.9,
+      "sl": 75012.9212373994,
+      "tp": 76151.80089213612,
+      "status": "open",
+      "openedAt": "2026-05-23T14:00:31.220Z",
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
