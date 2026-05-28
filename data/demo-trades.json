@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-05-28T04:00:31.074Z",
-  "equity": 9999.769470656884,
+  "updatedAt": "2026-05-28T04:15:31.576Z",
+  "equity": 9999.816521020832,
   "trades": [
     {
       "id": "S4-1779350431075",
@@ -69,6 +69,20 @@
       "tp": 223.66783947218318,
       "status": "open",
       "openedAt": "2026-05-28T00:00:30.995Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
+    },
+    {
+      "id": "SC1-1779940830984",
+      "strategy": "SC1-DonchETH",
+      "symbol": "ETH-USDT",
+      "direction": "short",
+      "entry": 1981.55,
+      "sl": 2013.9676341050563,
+      "tp": 1754.626561264605,
+      "status": "open",
+      "openedAt": "2026-05-28T04:00:30.985Z",
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
