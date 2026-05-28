@@ -15,7 +15,7 @@
       "closedAt": "2026-05-22T00:00:00.000Z",
       "pnl": -7,
       "pnlNote": "Cierre manual forzado. -7% sobre margen. Sin SL configurado por bug en blofin.js (orderType/size). Bug corregido 2026-05-22.",
-      "equityAfter": null
+      "equityAfter": 9993
     },
     {
       "id": "SC1-1779480031048",
@@ -25,11 +25,12 @@
       "entry": 2065.54,
       "sl": 2094.2843070867325,
       "tp": 1864.3298503928736,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-05-22T20:00:31.049Z",
-      "closedAt": null,
+      "closedAt": "2026-05-28T06:30:31.136Z",
       "pnl": null,
-      "equityAfter": null
+      "pnlNote": "Reconciliado: BloFin no reporta posición activa. PnL real pendiente del historial de BloFin.",
+      "equityAfter": 9999.924991410038
     },
     {
       "id": "SC1-1779523231037",
@@ -39,11 +40,12 @@
       "entry": 2028.59,
       "sl": 2058.627858081873,
       "tp": 1818.3249934268888,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-05-23T08:00:31.037Z",
-      "closedAt": null,
+      "closedAt": "2026-05-28T06:30:31.136Z",
       "pnl": null,
-      "equityAfter": null
+      "pnlNote": "Reconciliado: BloFin no reporta posición activa. PnL real pendiente del historial de BloFin.",
+      "equityAfter": 9999.924991410038
     },
     {
       "id": "M4-1779544831220",
@@ -53,11 +55,12 @@
       "entry": 75213.9,
       "sl": 75012.9212373994,
       "tp": 76151.80089213612,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-05-23T14:00:31.220Z",
-      "closedAt": null,
+      "closedAt": "2026-05-28T06:30:31.136Z",
       "pnl": null,
-      "equityAfter": null
+      "pnlNote": "Reconciliado: BloFin no reporta posición activa. PnL real pendiente del historial de BloFin.",
+      "equityAfter": 9999.924991410038
     },
     {
       "id": "S4-1779926430995",
@@ -67,11 +70,12 @@
       "entry": 266.8,
       "sl": 284.05286421112675,
       "tp": 223.66783947218318,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-05-28T00:00:30.995Z",
-      "closedAt": null,
+      "closedAt": "2026-05-28T06:30:31.136Z",
       "pnl": null,
-      "equityAfter": null
+      "pnlNote": "Reconciliado: BloFin no reporta posición activa. PnL real pendiente del historial de BloFin.",
+      "equityAfter": 9999.924991410038
     },
     {
       "id": "SC1-1779940830984",
@@ -81,11 +85,12 @@
       "entry": 1981.55,
       "sl": 2013.9676341050563,
       "tp": 1754.626561264605,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-05-28T04:00:30.985Z",
-      "closedAt": null,
+      "closedAt": "2026-05-28T06:30:31.136Z",
       "pnl": null,
-      "equityAfter": null
+      "pnlNote": "Reconciliado: BloFin no reporta posición activa. PnL real pendiente del historial de BloFin.",
+      "equityAfter": 9999.924991410038
     }
   ],
   "blofinPositions": []
