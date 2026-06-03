@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-03T09:40:38.932Z",
+  "updatedAt": "2026-06-03T09:40:40.682Z",
   "equity": 10002.43981150877,
   "trades": [],
   "blofinPositions": [
@@ -17,7 +17,7 @@
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.01758372,
-      "updatedAt": "2026-06-03T09:40:38.932Z"
+      "updatedAt": "2026-06-03T09:40:40.682Z"
     }
   ]
 }
