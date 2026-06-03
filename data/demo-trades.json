@@ -1,39 +1,23 @@
 {
-  "updatedAt": "2026-06-03T10:03:45.532Z",
-  "equity": 10002.358692320313,
+  "updatedAt": "2026-06-03T10:03:47.672Z",
+  "equity": 10002.357910617266,
   "trades": [],
   "blofinPositions": [
-    {
-      "instId": "ETH-USDT",
-      "direction": "long",
-      "contracts": 2,
-      "avgPx": 1877.08,
-      "markPx": 1875.6098372108333,
-      "upl": -0.029403255783334,
-      "uplRatio": -0.002349653913258944,
-      "leverage": "3",
-      "margin": 12.504065581405555,
-      "liqPx": null,
-      "tpTriggerPx": null,
-      "slTriggerPx": null,
-      "realizedPnl": -0.02252496,
-      "updatedAt": "2026-06-03T10:00:32.669Z"
-    },
     {
       "instId": "TAO-USDT",
       "direction": "short",
       "contracts": -11,
       "avgPx": 266.42,
-      "markPx": 232.04891576166665,
-      "upl": 3.7808192662166684,
-      "uplRatio": 0.3870327029314618,
+      "markPx": 231.96786309366667,
+      "upl": 3.789735059696666,
+      "uplRatio": 0.38794538968170555,
       "leverage": "3",
-      "margin": 8.508460244594444,
-      "liqPx": 90205.40647833534,
+      "margin": 8.505488313434444,
+      "liqPx": 90206.31095492048,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.01758372,
-      "updatedAt": "2026-06-03T10:00:32.669Z"
+      "updatedAt": "2026-06-03T10:03:47.672Z"
     }
   ]
 }
