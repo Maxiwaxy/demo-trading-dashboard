@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-06-03T10:45:31.218Z",
-  "equity": 10002.245696056676,
+  "updatedAt": "2026-06-03T10:45:32.316Z",
+  "equity": 10002.246576562713,
   "trades": [],
   "blofinPositions": [
     {
@@ -8,16 +8,16 @@
       "direction": "short",
       "contracts": -11,
       "avgPx": 266.42,
-      "markPx": 233.84081954433333,
-      "upl": 3.5837098501233338,
-      "uplRatio": 0.36685512111327984,
+      "markPx": 232.97481937433332,
+      "upl": 3.678969868823335,
+      "uplRatio": 0.3766066431836951,
       "leverage": "3",
-      "margin": 8.574163383292221,
+      "margin": 8.542410043725555,
       "liqPx": 90206.31095492048,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.01758372,
-      "updatedAt": "2026-06-03T10:30:32.196Z"
+      "updatedAt": "2026-06-03T10:45:32.316Z"
     }
   ]
 }
