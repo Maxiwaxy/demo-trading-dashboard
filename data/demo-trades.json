@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-13T20:29:04.666Z",
+  "updatedAt": "2026-06-13T20:29:05.290Z",
   "equity": 10065.39184726799,
   "trades": [
     {
@@ -17,22 +17,5 @@
       "equityAfter": 10003.056272583615
     }
   ],
-  "blofinPositions": [
-    {
-      "instId": "TAO-USDT",
-      "direction": "long",
-      "contracts": 213,
-      "avgPx": 241.84,
-      "markPx": 250.03768107033335,
-      "upl": 17.461060679810036,
-      "uplRatio": 0.10169137946989766,
-      "leverage": "3",
-      "margin": 177.52675355993668,
-      "liqPx": null,
-      "tpTriggerPx": null,
-      "slTriggerPx": null,
-      "realizedPnl": -0.30907152,
-      "updatedAt": "2026-06-13T13:15:32.037Z"
-    }
-  ]
+  "blofinPositions": []
 }
