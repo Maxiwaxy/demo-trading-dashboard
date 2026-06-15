@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-06-15T16:00:31.152Z",
-  "equity": 10100.06385657498,
+  "updatedAt": "2026-06-15T16:00:31.947Z",
+  "equity": 10100.053739445646,
   "trades": [
     {
       "id": "S4-manual-TAO-short",
@@ -15,6 +15,21 @@
       "openedAt": "2026-05-27T00:00:00.000Z",
       "closedAt": "2026-06-03T20:00:31.869Z",
       "equityAfter": 10003.056272583615
+    },
+    {
+      "id": "S9-1781539231641",
+      "strategy": "S9-MeanRev",
+      "symbol": "BTC-USDT",
+      "direction": "short",
+      "entry": 67292.14,
+      "sl": 69201.16045158717,
+      "tp": 64557.522499999985,
+      "size": null,
+      "status": "open",
+      "openedAt": "2026-06-15T16:00:31.641Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
     }
   ],
   "blofinPositions": [
