@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-06-16T11:17:56.919Z",
-  "equity": 10090.757443461516,
+  "updatedAt": "2026-06-16T11:17:57.689Z",
+  "equity": 10090.732638879583,
   "trades": [
     {
       "id": "S4-manual-TAO-short",
@@ -38,32 +38,32 @@
       "direction": "short",
       "contracts": -7,
       "avgPx": 67135.8,
-      "markPx": 66593.062442029,
-      "upl": 4.0705316847825,
-      "uplRatio": 0.08084175029879737,
+      "markPx": 66524.813297102,
+      "upl": 4.582400271735,
+      "uplRatio": 0.09100758505864233,
       "leverage": "10",
-      "margin": 49.94479683152175,
-      "liqPx": 1406673.7774524034,
+      "margin": 49.8936099728265,
+      "liqPx": 1406162.1960917523,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.3021111,
-      "updatedAt": "2026-06-16T10:45:33.451Z"
+      "updatedAt": "2026-06-16T11:17:57.689Z"
     },
     {
       "instId": "TAO-USDT",
       "direction": "long",
       "contracts": 200,
       "avgPx": 255.25,
-      "markPx": 268.030029147,
-      "upl": 25.560058294,
-      "uplRatio": 0.15020602327522037,
+      "markPx": 266.08406548133337,
+      "upl": 21.66813096266674,
+      "uplRatio": 0.12733475590205723,
       "leverage": "3",
-      "margin": 178.686686098,
+      "margin": 177.38937698755558,
       "liqPx": null,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.3063,
-      "updatedAt": "2026-06-16T10:45:33.451Z"
+      "updatedAt": "2026-06-16T11:17:57.689Z"
     }
   ]
 }
