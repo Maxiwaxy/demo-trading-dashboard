@@ -60,6 +60,21 @@
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
+    },
+    {
+      "id": "SC1-1782320310890",
+      "strategy": "SC1-DonchETH",
+      "symbol": "ETH-USDT",
+      "direction": "short",
+      "entry": 1618.08,
+      "sl": 1647.9760857815704,
+      "tp": 1408.8073995290067,
+      "size": null,
+      "status": "open",
+      "openedAt": "2026-06-24T16:58:30.890Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
     }
   ],
   "blofinPositions": [
