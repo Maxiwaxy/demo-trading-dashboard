@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-06-24T14:45:32.406Z",
-  "equity": 10036.015035638233,
+  "updatedAt": "2026-06-24T17:01:28.805Z",
+  "equity": 10053.725539362897,
   "trades": [
     {
       "id": "S4-manual-TAO-short",
@@ -79,20 +79,36 @@
   ],
   "blofinPositions": [
     {
+      "instId": "ETH-USDT",
+      "direction": "short",
+      "contracts": -31,
+      "avgPx": 1592.32,
+      "markPx": 1592.3833875968335,
+      "upl": -0.019650155018385,
+      "uplRatio": -0.000199041639976575,
+      "leverage": "5",
+      "margin": 98.72777003100367,
+      "liqPx": 33886.571059288275,
+      "tpTriggerPx": null,
+      "slTriggerPx": null,
+      "realizedPnl": -0.29617152,
+      "updatedAt": "2026-06-24T17:01:28.805Z"
+    },
+    {
       "instId": "TAO-USDT",
       "direction": "short",
       "contracts": -225,
       "avgPx": 218.94,
-      "markPx": 217.98325344466664,
-      "upl": 2.15267974950006,
-      "uplRatio": 0.013109708897415182,
+      "markPx": 209.90018265766668,
+      "upl": 20.33958902024997,
+      "uplRatio": 0.12386705045674595,
       "leverage": "3",
-      "margin": 163.4874400835,
-      "liqPx": 4629.361366232594,
+      "margin": 157.42513699325002,
+      "liqPx": 4628.502329530132,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.295569,
-      "updatedAt": "2026-06-24T14:45:32.406Z"
+      "updatedAt": "2026-06-24T17:01:28.805Z"
     }
   ]
 }
