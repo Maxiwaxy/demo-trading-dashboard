@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-06-24T19:45:32.311Z",
-  "equity": 10048.825692510116,
+  "updatedAt": "2026-06-24T20:00:31.140Z",
+  "equity": 10049.223250598328,
   "trades": [
     {
       "id": "S4-manual-TAO-short",
@@ -72,6 +72,21 @@
       "size": null,
       "status": "open",
       "openedAt": "2026-06-24T16:58:30.890Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
+    },
+    {
+      "id": "SC1-1782331230779",
+      "strategy": "SC1-DonchETH",
+      "symbol": "ETH-USDT",
+      "direction": "short",
+      "entry": 1584.58,
+      "sl": 1618.2785082464152,
+      "tp": 1348.6904422750931,
+      "size": 5,
+      "status": "open",
+      "openedAt": "2026-06-24T20:00:30.779Z",
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
