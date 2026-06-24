@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-24T20:00:31.140Z",
+  "updatedAt": "2026-06-24T20:00:32.135Z",
   "equity": 10049.223250598328,
   "trades": [
     {
@@ -75,21 +75,6 @@
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
-    },
-    {
-      "id": "SC1-1782331230779",
-      "strategy": "SC1-DonchETH",
-      "symbol": "ETH-USDT",
-      "direction": "short",
-      "entry": 1584.58,
-      "sl": 1618.2785082464152,
-      "tp": 1348.6904422750931,
-      "size": 5,
-      "status": "open",
-      "openedAt": "2026-06-24T20:00:30.779Z",
-      "closedAt": null,
-      "pnl": null,
-      "equityAfter": null
     }
   ],
   "blofinPositions": [
@@ -98,32 +83,32 @@
       "direction": "short",
       "contracts": -31,
       "avgPx": 1592.32,
-      "markPx": 1580.3069379848332,
-      "upl": 3.724049224701708,
-      "uplRatio": 0.03772188383982742,
+      "markPx": 1579.8958992256669,
+      "upl": 3.851471240043261,
+      "uplRatio": 0.03901257528114041,
       "leverage": "5",
-      "margin": 97.97903015505966,
-      "liqPx": 33857.25736269808,
+      "margin": 97.95354575199134,
+      "liqPx": 33858.507393913234,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.29617152,
-      "updatedAt": "2026-06-24T19:45:32.311Z"
+      "updatedAt": "2026-06-24T20:00:32.135Z"
     },
     {
       "instId": "TAO-USDT",
       "direction": "short",
       "contracts": -225,
       "avgPx": 218.94,
-      "markPx": 213.78073260966667,
-      "upl": 11.608351628249993,
-      "uplRatio": 0.07069426404951124,
+      "markPx": 213.55196864366667,
+      "upl": 12.123070551749992,
+      "uplRatio": 0.0738288758061569,
       "leverage": "3",
-      "margin": 160.33554945725,
-      "liqPx": 4630.024419895585,
+      "margin": 160.16397648275,
+      "liqPx": 4630.022929252861,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.295569,
-      "updatedAt": "2026-06-24T19:45:32.311Z"
+      "updatedAt": "2026-06-24T20:00:32.135Z"
     }
   ]
 }
