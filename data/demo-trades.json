@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-07-03T15:00:31.540Z",
-  "equity": 10015.193016884712,
+  "updatedAt": "2026-07-03T15:00:32.677Z",
+  "equity": 10015.203106909961,
   "trades": [
     {
       "id": "S4-manual-TAO-short",
@@ -83,16 +83,16 @@
       "direction": "short",
       "contracts": -225,
       "avgPx": 218.94,
-      "markPx": 216.357086798,
-      "upl": 5.8115547045,
-      "uplRatio": 0.035392069087421214,
+      "markPx": 217.06963881966666,
+      "upl": 4.208312655750015,
+      "uplRatio": 0.025628407513474102,
       "leverage": "3",
-      "margin": 162.2678150985,
+      "margin": 162.80222911475,
       "liqPx": 4619.305601061289,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.295569,
-      "updatedAt": "2026-07-03T14:45:31.874Z"
+      "updatedAt": "2026-07-03T15:00:32.677Z"
     }
   ]
 }
