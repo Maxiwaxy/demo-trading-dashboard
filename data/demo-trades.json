@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-07-07T14:00:11.298Z",
-  "equity": 10024.100231499506,
+  "updatedAt": "2026-07-07T14:00:12.173Z",
+  "equity": 10024.754599172757,
   "trades": [
     {
       "id": "S4-manual-TAO-short",
@@ -92,7 +92,7 @@
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.295569,
-      "updatedAt": "2026-07-07T14:00:11.298Z"
+      "updatedAt": "2026-07-07T14:00:12.173Z"
     }
   ]
 }
