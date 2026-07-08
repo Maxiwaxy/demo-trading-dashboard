@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-08T06:25:55.549Z",
+  "updatedAt": "2026-07-08T06:25:56.107Z",
   "equity": 10034.202084030901,
   "trades": [
     {
@@ -92,7 +92,7 @@
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.295569,
-      "updatedAt": "2026-07-08T06:25:54.298Z"
+      "updatedAt": "2026-07-08T06:25:56.107Z"
     }
   ]
 }
