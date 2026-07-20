@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-20T17:48:56.945Z",
+  "updatedAt": "2026-07-20T17:48:57.769Z",
   "equity": 10057.592338781622,
   "trades": [
     {
@@ -90,21 +90,6 @@
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
-    },
-    {
-      "id": "SC1-1784569736618",
-      "strategy": "SC1-DonchETH",
-      "symbol": "ETH-USDT",
-      "direction": "long",
-      "entry": 1902.34,
-      "sl": 1876.872689096946,
-      "tp": 2080.6111763213776,
-      "size": 7,
-      "status": "open",
-      "openedAt": "2026-07-20T17:48:56.618Z",
-      "closedAt": null,
-      "pnl": null,
-      "equityAfter": null
     }
   ],
   "blofinPositions": [
@@ -113,16 +98,16 @@
       "direction": "short",
       "contracts": -225,
       "avgPx": 218.94,
-      "markPx": 194.40511317166667,
-      "upl": 55.203495363749994,
-      "uplRatio": 0.3361864459897688,
+      "markPx": 195.259822559,
+      "upl": 53.28039924225,
+      "uplRatio": 0.3244748895724856,
       "leverage": "3",
-      "margin": 145.80383487875,
-      "liqPx": 4616.382078979397,
+      "margin": 146.44486691925,
+      "liqPx": 4616.367367917573,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.295569,
-      "updatedAt": "2026-07-20T13:30:32.592Z"
+      "updatedAt": "2026-07-20T17:48:57.769Z"
     }
   ]
 }
