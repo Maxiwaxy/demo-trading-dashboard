@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-24T13:46:49.868Z",
+  "updatedAt": "2026-07-24T13:46:50.502Z",
   "equity": 10074.277137422057,
   "trades": [
     {
@@ -40,11 +40,11 @@
       "sl": 235.17460750722898,
       "tp": 186.61348123192755,
       "size": 14,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-06-23T12:33:04.356Z",
-      "closedAt": null,
+      "closedAt": "2026-07-24T13:46:50.502Z",
       "pnl": null,
-      "equityAfter": null
+      "equityAfter": 10074.277137422057
     },
     {
       "id": "S4-1782233378336",
@@ -55,11 +55,11 @@
       "sl": 229.91213552933374,
       "tp": 181.21966117666562,
       "size": 14,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-06-23T16:49:38.336Z",
-      "closedAt": null,
+      "closedAt": "2026-07-24T13:46:50.502Z",
       "pnl": null,
-      "equityAfter": null
+      "equityAfter": 10074.277137422057
     },
     {
       "id": "SC1-1782320310890",
@@ -85,29 +85,12 @@
       "sl": 208.81371986436224,
       "tp": 178.66570033909434,
       "size": 23,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-07-13T20:14:18.165Z",
-      "closedAt": null,
+      "closedAt": "2026-07-24T13:46:50.502Z",
       "pnl": null,
-      "equityAfter": null
+      "equityAfter": 10074.277137422057
     }
   ],
-  "blofinPositions": [
-    {
-      "instId": "TAO-USDT",
-      "direction": "short",
-      "contracts": -225,
-      "avgPx": 218.94,
-      "markPx": 191.36012938833332,
-      "upl": 62.05470887625003,
-      "uplRatio": 0.3779099837170003,
-      "leverage": "3",
-      "margin": 143.52009704124998,
-      "liqPx": 4616.163836002112,
-      "tpTriggerPx": null,
-      "slTriggerPx": null,
-      "realizedPnl": -0.295569,
-      "updatedAt": "2026-07-24T11:43:37.344Z"
-    }
-  ]
+  "blofinPositions": []
 }
