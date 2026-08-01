@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T15:45:31.696Z",
+  "updatedAt": "2026-08-01T15:45:32.470Z",
   "equity": 10074.277137422057,
   "trades": [
     {
@@ -100,11 +100,11 @@
       "sl": 1879.5610881922678,
       "tp": 1863.5495397031266,
       "size": 45,
-      "status": "open",
+      "status": "closed",
       "openedAt": "2026-08-01T15:13:20.660Z",
-      "closedAt": null,
+      "closedAt": "2026-08-01T15:45:32.470Z",
       "pnl": null,
-      "equityAfter": null
+      "equityAfter": 10074.277137422057
     }
   ],
   "blofinPositions": []
