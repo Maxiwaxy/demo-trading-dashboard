@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-01T12:00:32.725Z",
+  "updatedAt": "2026-08-01T15:13:21.109Z",
   "equity": 10074.277137422057,
   "trades": [
     {
@@ -90,6 +90,21 @@
       "closedAt": "2026-07-24T13:46:50.502Z",
       "pnl": null,
       "equityAfter": 10074.277137422057
+    },
+    {
+      "id": "M2-1785597200660",
+      "strategy": "M2-MeanRevETH",
+      "symbol": "ETH-USDC",
+      "direction": "short",
+      "entry": 1875.18,
+      "sl": 1879.5610881922678,
+      "tp": 1863.5495397031266,
+      "size": 45,
+      "status": "open",
+      "openedAt": "2026-08-01T15:13:20.660Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
     }
   ],
   "blofinPositions": []
