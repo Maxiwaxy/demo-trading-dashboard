@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-03T07:19:45.638Z",
+  "updatedAt": "2026-08-03T07:19:47.546Z",
   "equity": 10074.277137422057,
   "trades": [
     {
@@ -105,6 +105,21 @@
       "closedAt": "2026-08-01T15:45:32.470Z",
       "pnl": null,
       "equityAfter": 10074.277137422057
+    },
+    {
+      "id": "S4-1785741586913",
+      "strategy": "S4-BBSqueeze",
+      "symbol": "TAO-USDT",
+      "direction": "short",
+      "entry": 189.8,
+      "sl": 195.87264327782293,
+      "tp": 174.6183918054427,
+      "size": 33,
+      "status": "open",
+      "openedAt": "2026-08-03T07:19:46.914Z",
+      "closedAt": null,
+      "pnl": null,
+      "equityAfter": null
     }
   ],
   "blofinPositions": []
