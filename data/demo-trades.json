@@ -1,6 +1,6 @@
 {
-  "updatedAt": "2026-08-03T12:00:31.079Z",
-  "equity": 10075.470532649178,
+  "updatedAt": "2026-08-03T12:00:32.204Z",
+  "equity": 10075.391783901212,
   "trades": [
     {
       "id": "S4-manual-TAO-short",
@@ -135,21 +135,6 @@
       "closedAt": null,
       "pnl": null,
       "equityAfter": null
-    },
-    {
-      "id": "S4-1785758430734",
-      "strategy": "S4-BBSqueeze",
-      "symbol": "TAO-USDT",
-      "direction": "short",
-      "entry": 188.4,
-      "sl": 194.29018731984007,
-      "tp": 173.67453170039983,
-      "size": 34,
-      "status": "open",
-      "openedAt": "2026-08-03T12:00:30.734Z",
-      "closedAt": null,
-      "pnl": null,
-      "equityAfter": null
     }
   ],
   "blofinPositions": [
@@ -158,16 +143,16 @@
       "direction": "short",
       "contracts": -265,
       "avgPx": 188.91,
-      "markPx": 188.52256624133332,
-      "upl": 1.026699460466702,
-      "uplRatio": 0.006152672044889312,
+      "markPx": 188.379644289,
+      "upl": 1.40544263415,
+      "uplRatio": 0.008422355264411624,
       "leverage": "3",
-      "margin": 166.5282668465111,
-      "liqPx": 3948.526083441101,
+      "margin": 166.40201912195,
+      "liqPx": 3948.495069837146,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.3003669,
-      "updatedAt": "2026-08-03T11:45:32.984Z"
+      "updatedAt": "2026-08-03T12:00:32.204Z"
     }
   ]
 }
