@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-10T07:05:03.890Z",
+  "updatedAt": "2026-08-10T07:05:04.900Z",
   "equity": 10049.972747569785,
   "trades": [
     {
@@ -158,16 +158,16 @@
       "direction": "long",
       "contracts": 242,
       "avgPx": 205.39,
-      "markPx": 203.64780261466666,
-      "upl": -4.216117672506683,
-      "uplRatio": -0.025447159822776278,
+      "markPx": 203.6456306546667,
+      "upl": -4.221373815706586,
+      "uplRatio": -0.025478884249476117,
       "leverage": "3",
-      "margin": 164.27589410916443,
+      "margin": 164.27414206143115,
       "liqPx": null,
       "tpTriggerPx": null,
       "slTriggerPx": null,
       "realizedPnl": -0.29822628,
-      "updatedAt": "2026-08-10T07:05:01.051Z"
+      "updatedAt": "2026-08-10T07:05:04.900Z"
     }
   ]
 }
